@@ -1,5 +1,6 @@
 #include "mini_list.h"
 #include <stdbool.h>
+#include <assert.h>
 
 void mini_list_init(MiniList_t *list)
 {
@@ -47,6 +48,7 @@ void mini_list_insert(MiniList_t *list, MiniListItem_t *item)
     item->prev = current->prev;
     item->prev->next = item;
     current->prev = item;
+    list->count++;
 }
 
 void mini_list_remove(MiniList_t *list, MiniListItem_t *item)
@@ -85,11 +87,4 @@ void *mini_list_front_owner(MiniList_t *list)
         return NULL;
     }
     return item->owner;
-}
-
-void mini_tcb_init(MiniTCB_t *tcb,uint32_t priority)
-{
-    tcb->priority=priority;
-    mini_list_item_init(&tcb->state_item);
-    tcb->state_item.owner=tcb;
 }
