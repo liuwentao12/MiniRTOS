@@ -18,6 +18,13 @@ typedef struct Mini_list
     MiniListItem_t end;
 } MiniList_t;
 
+typedef struct MiniTCB
+{
+    uint32_t priority;
+    MiniListItem_t state_item;
+}MiniTCB_t;
+
+
 void mini_list_init(MiniList_t *list);
 void mini_list_item_init(MiniListItem_t *item);
 void mini_list_insert_end(MiniList_t *list,MiniListItem_t *item);
