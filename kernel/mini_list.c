@@ -20,7 +20,7 @@ void mini_list_item_init(MiniListItem_t *item)
 void mini_list_insert_end(MiniList_t *list, MiniListItem_t *item)
 {
     MiniListItem_t *last = list->end.prev;
- 
+
     item->prev = last;
     item->next = &list->end;
 
@@ -28,4 +28,17 @@ void mini_list_insert_end(MiniList_t *list, MiniListItem_t *item)
     list->end.prev = item;
 
     list->count++;
+}
+
+void mini_list_insert(MiniList_t *list, MiniListItem_t *item)
+{
+    MiniListItem_t *current = list->end.next;
+    while (current != &list->end && current->value <= item->value)
+    {
+        current = current->next;
+    }
+    item->next =current;
+    item->prev =current->prev;
+    item->prev->next=item;
+    current->prev=item;
 }

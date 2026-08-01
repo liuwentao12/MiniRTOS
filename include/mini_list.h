@@ -8,7 +8,7 @@ typedef struct MiniListItem
 {
     uint32_t value;
     struct MiniListItem *next;
-    struct MiniLidtItem *prev;
+    struct MiniListItem *prev;
     void *owner;
 } MiniListItem_t;
 
@@ -21,5 +21,6 @@ typedef struct Mini_list
 void mini_list_init(MiniList_t *list);
 void mini_list_item_init(MiniListItem_t *item);
 void mini_list_insert_end(MiniList_t *list,MiniListItem_t *item);
+void mini_list_insert(MiniList_t *list, MiniListItem_t *item);
 
 #endif
