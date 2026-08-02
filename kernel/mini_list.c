@@ -1,6 +1,4 @@
 #include "mini_list.h"
-#include <stdbool.h>
-#include <assert.h>
 
 void mini_list_init(MiniList_t *list)
 {
