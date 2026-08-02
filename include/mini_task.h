@@ -6,6 +6,7 @@
 
 typedef struct MiniTCB
 {
+    uint32_t *stack_pointer;
     uint32_t priority;
     MiniListItem_t state_item;
 } MiniTCB_t;
