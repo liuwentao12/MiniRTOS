@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ../../kernel/mini_list.c
     ../../kernel/mini_task.c
     ../../kernel/mini_scheduler.c
+    ../../portable/ARM_CM3/port.c
 )
 
 # Add include paths

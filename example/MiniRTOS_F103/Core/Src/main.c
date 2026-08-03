@@ -42,7 +42,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+static MiniTCB_t task_a_tcb;
+static uint32_t task_a_stack[128] __attribute__((aligned(8)));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +55,15 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+static void task_a(void *argument)
+{
+  (void)argument;
+  while (1)
+  {
+    
+  }
+  
+}
 /* USER CODE END 0 */
 
 /**
@@ -88,6 +97,15 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   mini_scheduler_init();
+
+  mini_tcb_init(&task_a_tcb, &task_a_stack[128],task_a,NULL,2U);
+
+  task_a_tcb.stack_pointer = &task_a_stack[128];
+
+  mini_scheduler_add_ready(&task_a_tcb);
+
+  MiniTCB_t *selected_task = mini_scheduler_select_next();
+  (void)selected_task;
   /* USER CODE END 2 */
 
   /* Infinite loop */
