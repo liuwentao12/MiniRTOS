@@ -58,11 +58,12 @@ static void MX_GPIO_Init(void);
 static void task_a(void *argument)
 {
   (void)argument;
+
   while (1)
   {
-    
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    HAL_Delay(500U);
   }
-  
 }
 /* USER CODE END 0 */
 
@@ -98,14 +99,17 @@ int main(void)
   /* USER CODE BEGIN 2 */
   mini_scheduler_init();
 
-  mini_tcb_init(&task_a_tcb, &task_a_stack[128],task_a,NULL,2U);
-
-  task_a_tcb.stack_pointer = &task_a_stack[128];
+  mini_tcb_init(&task_a_tcb, &task_a_stack[128], task_a, NULL, 2U);
 
   mini_scheduler_add_ready(&task_a_tcb);
 
   MiniTCB_t *selected_task = mini_scheduler_select_next();
-  (void)selected_task;
+  if (selected_task == NULL)
+  {
+    Error_Handler();
+  }
+
+  mini_port_start_first_task(selected_task->stack_pointer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
