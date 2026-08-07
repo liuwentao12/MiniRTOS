@@ -126,6 +126,8 @@ Cortex-M3 在异常返回时会自动恢复 `r0-r3、r12、lr、pc、xPSR`。因
 cd example/MiniRTOS_F103
 cmake --preset Debug
 cmake --build --preset Debug
+arm-none-eabi-objcopy -O binary build/Debug/MiniRTOS_F103.elf build/Debug/MiniRTOS_F103.bin
+st-flash --reset write build/Debug/MiniRTOS_F103.bin 0x08000000
 ```
 
 生成文件位于：
