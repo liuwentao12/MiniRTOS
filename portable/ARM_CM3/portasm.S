@@ -59,15 +59,18 @@ PendSV_Handler:
     mrs r0, psp
 
     stmdb r0!, {r4-r11}
-    
+
     msr psp,r0
 
     bl mini_scheduler_save_current_stack
 
     bl mini_scheduler_switch_next
 
-    bx lr
+    bl mini_scheduler_get_current_stack
 
+    msr psp,r0
+
+    bx lr
 .size PendSV_Handler, .-PendSV_Handler
 
 .section .note.GNU-stack, "", %progbits

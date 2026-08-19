@@ -63,8 +63,11 @@ static void task_a(void *argument)
 
   while (1)
   {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+
     SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
-    for(volatile int i = 0;i<1000;i++);
+
+    for(volatile int i = 0;i<100000;i++);
   }
 }
 
@@ -74,9 +77,12 @@ static void task_b(void *argument)
 
   while (1)
   {
-    
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+
+    for(volatile int i = 0;i<100000;i++);
   }
-  
 }
 /* USER CODE END 0 */
 

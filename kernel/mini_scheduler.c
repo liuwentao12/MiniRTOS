@@ -71,3 +71,8 @@ void mini_scheduler_save_current_stack(uint32_t *sp)
 {
     current_task->stack_pointer = sp;
 }
+
+uint32_t *mini_scheduler_get_current_stack(void)
+{
+    return current_task->stack_pointer;
+}

@@ -12,5 +12,6 @@ MiniTCB_t *mini_scheduler_get_current(void);
 MiniTCB_t **mini_scheduler_get_current_ptr(void);
 void mini_scheduler_save_current_stack(uint32_t *sp);
 void mini_scheduler_switch_next(void);
+uint32_t *mini_scheduler_get_current_stack(void);
 
 #endif
