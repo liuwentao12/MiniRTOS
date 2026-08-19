@@ -4,6 +4,7 @@
 #include <assert.h>
 
 static MiniList_t ready_lists[MINI_MAX_PRIORITIES];
+static MiniTCB_t *current_task = NULL;
 
 void mini_scheduler_init(void)
 {
@@ -31,4 +32,9 @@ MiniTCB_t *mini_scheduler_select_next(void)
         }
     }
     return NULL;
+}
+
+MiniTCB_t *mini_scheduler_get_current(void)
+{
+    return current_task;
 }

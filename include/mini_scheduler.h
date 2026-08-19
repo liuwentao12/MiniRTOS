@@ -8,5 +8,6 @@
 void mini_scheduler_init(void);
 void mini_scheduler_add_ready(MiniTCB_t *tcb);
 MiniTCB_t *mini_scheduler_select_next(void);
+MiniTCB_t *mini_scheduler_get_current(void);
 
 #endif

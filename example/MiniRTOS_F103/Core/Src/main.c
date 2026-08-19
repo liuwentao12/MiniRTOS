@@ -109,6 +109,8 @@ int main(void)
     Error_Handler();
   }
 
+  mini_scheduler_set_current(selected_task);
+  
   mini_port_start_first_task(selected_task->stack_pointer);
   /* USER CODE END 2 */
 
