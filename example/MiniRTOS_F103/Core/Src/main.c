@@ -44,6 +44,8 @@
 /* USER CODE BEGIN PV */
 static MiniTCB_t task_a_tcb;
 static uint32_t task_a_stack[128] __attribute__((aligned(8)));
+static MiniTCB_t task_b_tcb;
+static uint32_t task_b_stack[128] __attribute__((aligned(8)));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,9 +63,20 @@ static void task_a(void *argument)
 
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-    HAL_Delay(500U);
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+    for(volatile int i = 0;i<1000;i++);
   }
+}
+
+static void task_b(void *argument)
+{
+  (void)argument;
+
+  while (1)
+  {
+    
+  }
+  
 }
 /* USER CODE END 0 */
 
@@ -100,8 +113,10 @@ int main(void)
   mini_scheduler_init();
 
   mini_tcb_init(&task_a_tcb, &task_a_stack[128], task_a, NULL, 2U);
+  mini_tcb_init(&task_b_tcb, &task_b_stack[128], task_b, NULL, 2U);
 
   mini_scheduler_add_ready(&task_a_tcb);
+  mini_scheduler_add_ready(&task_b_tcb);
 
   MiniTCB_t *selected_task = mini_scheduler_select_next();
   if (selected_task == NULL)
@@ -110,7 +125,7 @@ int main(void)
   }
 
   mini_scheduler_set_current(selected_task);
-  
+
   mini_port_start_first_task(selected_task->stack_pointer);
   /* USER CODE END 2 */
 

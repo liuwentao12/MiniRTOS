@@ -51,4 +51,40 @@ SVC_Handler:
 
 .size SVC_Handler, .-SVC_Handler
 
+.global PendSV_Handler
+.type PendSV_Handler, %function
+.thumb_func
+
+PendSV_Handler:
+    /* 1. 保存当前任务现场 */
+    mrs r0, psp
+    stmdb r0!, {r4-r11}
+
+    /* 2. 保存新的栈顶到当前任务TCB */
+    ldr r1, =current_task
+    ldr r2, [r1]
+    str r0, [r2]
+
+    /* 3. 选择下一个任务 */
+    bl mini_scheduler_select_next
+    /* 返回: r0 = 下一个任务TCB地址 */
+
+    /* 4. 更新current_task */
+    ldr r1, =current_task
+    str r0, [r1]
+
+    /* 5. 获取新任务栈顶 */
+    ldr r0, [r0]
+
+    /* 6. 恢复新任务r4-r11 */
+    ldmia r0!, {r4-r11}
+
+    /* 7. 更新PSP */
+    msr psp,r0
+
+    /* 8. 异常返回 */
+    bx lr
+
+.size PendSV_Handler, .-PendSV_Handler
+
 .section .note.GNU-stack, "", %progbits
