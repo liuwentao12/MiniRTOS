@@ -44,6 +44,19 @@ MiniTCB_t *mini_scheduler_select_next(void)
     return current_task;
 }
 
+void mini_scheduler_switch_next(void)
+{
+    MiniTCB_t *next;
+
+    next = mini_scheduler_select_next();
+
+    if (next != NULL)
+    {
+        current_task = next;
+    }
+    
+}
+
 MiniTCB_t *mini_scheduler_get_current(void)
 {
     return current_task;
