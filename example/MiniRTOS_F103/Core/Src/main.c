@@ -63,7 +63,7 @@ static void task_a(void *argument)
 
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 
     SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 
@@ -77,7 +77,7 @@ static void task_b(void *argument)
 
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 
     SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 
